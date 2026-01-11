@@ -1,2 +1,2 @@
-> [!important] Light Cloud
+<b>Light Cloud</b>
 > Light Cloud - легковесное облачное хранилище, осуществляемое хранение файлов в чате Telegram. 
