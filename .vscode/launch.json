@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run and build run.ps1 (PowerShell)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "powershell.exe",
+      "runtimeArgs": [
+        "-NoProfile",
+        "-Command",
+        "& \"C:\\GoProjects\\LightCloud\\cmd\\run.ps1\""
+      ],
+      "console": "integratedTerminal"
+    }
+  ]
+}
