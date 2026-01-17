@@ -1,13 +1,12 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
-	"os"
 
+	"test.go/internal/chat"
 	myclient "test.go/internal/client"
-	"test.go/internal/entities"
+	"test.go/internal/entitiesBuilder"
 	"test.go/internal/user"
 
 	"github.com/zelenin/go-tdlib/client"
@@ -21,26 +20,22 @@ func main() {
 	}
 	log.Println("Logged as:", me.FirstName, me.LastName)
 
-	err = runapp(tdClient)
+	go runapp(tdClient)
 	if err != nil {
 		log.Fatal("runapp: Error running app:", err)
 	}
-	select {}
 
+	select {}
 }
 
 func runapp(tdClient client.Client) error {
 
-	chatID, chatTitle, chatType := user.GetChatsToSelect(tdClient)
-	user.SaveSelectedChat(chatID, chatTitle, chatType)
-	chatFilePath := "../configs/chat.json"
-	configChatFile, err := os.ReadFile(chatFilePath)
+	myChat, err := entitiesBuilder.CreateChatEntity(tdClient)
 	if err != nil {
 		return err
 	}
 
-	chat := entities.ChatData{}
-	_ = json.Unmarshal(configChatFile, &chat)
-	fmt.Println(chat)
+	user.DownloadFile(tdClient, myChat)
+	fmt.Println("Chat history length:", len(chat.GetChatHistory(tdClient, myChat.ChatID, 100)))
 	return nil
 }
